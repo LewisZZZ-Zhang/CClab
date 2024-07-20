@@ -304,7 +304,7 @@ function update_ex(list){
   for (let i = 0;i<list.length;i++){
     list[i][0] += list[i][5]*cos(list[i][4])
     list[i][1] += list[i][5]*sin(list[i][4])+g
-    if (dist(list[i][0],list[i][1],list[i][2],list[i][4])>600){
+    if (dist(list[i][0],list[i][1],list[i][2],list[i][3])>600){
       list.splice(i, 1)
     }
   }
