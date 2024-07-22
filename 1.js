@@ -4,8 +4,7 @@ let missiles = [];
 let hp = 100;
 let explode = []
 let g = 1.1
-// Trigger the explosion effect at a specific (x, y) coordinate when the mouse is pressed
-// explodeFirework(mouseX, mouseY);
+
 
 function halo(x, y, d, r, g, b, t) {
   noStroke();
@@ -50,7 +49,7 @@ function reset_satellite() {
   return [
     random(-(PI * 3) / 4, (PI * 3) / 4), //starting angle
     random(520, 900), //starting radius
-    (random(2, 6) * PI) / 1600, //speed
+    (random(2, 6) * PI) / 1600, //rotating speed
     random(15, 20),
     random(10, 30),
   ];
@@ -68,6 +67,8 @@ function setup() {
   createCanvas(800, 500);
   centerX = width / 2;
   centerY = height + 400;
+  creatureX = width / 8;
+  creatureY = height / 2;
   for (let i = 0; i <= 100; i++) {
     stars.push(reset_stars());
   }
@@ -95,16 +96,14 @@ function draw_satellite(x, y, r, rectLength, rectWidth) {
 function creature(x, y, a, b) {
   rectMode(CORNER);
   cycle = sin((PI / 45) * frameCount);
-  if (frameCount > 270) {
-    y = y + b * cycle;
-  }
-  if (frameCount % 800 > 0 && frameCount % 800 < 400 && frameCount > 300) {
+  
+  if (frameCount % 800 > 0 && frameCount % 800 < 400 && frameCount > 400) {
     halo(x, y, 50, 0, 255, 0, 1);
   }
-
+  
   noStroke();
   fill(200);
-  //body
+  // Body
   rect(x - a / 2, y, a, b);
   triangle(
     x - a / 2,
@@ -122,8 +121,9 @@ function creature(x, y, a, b) {
     x + a / 2 - 0.125 * a * (cycle + 1),
     y - b + 0.25 * a * (cycle + 1)
   );
+  
   if (frameCount > 250) {
-    //wing left
+    // Wing left
     triangle(
       x - a,
       y + (1 / 2) * b,
@@ -148,7 +148,7 @@ function creature(x, y, a, b) {
       x - 3 * a,
       y - 0.75 * a * (cycle + 1)
     );
-    //wing right
+    // Wing right
     triangle(
       x + a,
       y + (1 / 2) * b,
@@ -174,6 +174,8 @@ function creature(x, y, a, b) {
       y - 0.75 * a * (cycle + 1)
     );
   }
+  
+  return { x: x, y: y }; // Return the current position
 }
 
 function shooting_stars(stars) {
@@ -228,28 +230,23 @@ function aim(x, y) {
 function missile() {
   for (let i = 0; i < missiles.length; i++) {
     let m = missiles[i];
-
-
     let dx = m.targetX - m.x;
     let dy = m.targetY - m.y;
     let angle = atan2(dy, dx); // angle towards target
-
-    // Draw missile
+    // to draw missile:
     push();
     translate(m.x, m.y);
-    rotate(angle + (PI * 3) / 2); // Rotate towards target
+    rotate(angle + (PI * 3) / 2); // Rotate towards target, it should be 3/2 pi
+    strokeWeight(1)
     stroke(255, 0, 0);
     fill("#FFFCD7");
-
     rectMode(CENTER);
-    rect(0, 0, 20, 60);
-
+    rect(0, 0, 15, 30);
     beginShape();
-    vertex(-10, 30);
-    vertex(10, 30);
+    vertex(-7.5, 30);
+    vertex(7.5, 30);
     vertex(0, 60);
     endShape(CLOSE);
-
     pop();
 
     let distToTarget = sqrt(dx * dx + dy * dy);
@@ -257,7 +254,7 @@ function missile() {
     m.x += (dx / distToTarget) * speed;
     m.y += (dy / distToTarget) * speed;
 
-    // reaches the mouse
+    //when it reach the mouse, delete it 
     if (dist(m.x, m.y, m.targetX, m.targetY) < 5) {
       missiles.splice(i, 1);
     }
@@ -303,7 +300,7 @@ function update_ex(list){
   for (let i = 0;i<list.length;i++){
     list[i][0] += list[i][5]*cos(list[i][4])
     list[i][1] += list[i][5]*sin(list[i][4])+g
-    if (dist(list[i][0],list[i][1],list[i][2],list[i][4])>600){
+    if (dist(list[i][0],list[i][1],list[i][2],list[i][3])>600){
       list.splice(i, 1)
     }
   }
@@ -313,7 +310,7 @@ function update_ex(list){
 function draw_ex(list){
   for (let i = 0;i<list.length;i++){
     noStroke()
-    fill(255,0,0,400-dist(list[i][0],list[i][1],list[i][2],list[i][4]))
+    fill(255,0,0,400-dist(list[i][0],list[i][1],list[i][2],list[i][3]))
     rect(list[i][0],list[i][1],5,5)
   }
   
@@ -326,7 +323,7 @@ function mousePressed() {
 }
 
 function draw() {
-  if (225<frameCount && frameCount<300){
+  if (225<frameCount && frameCount<400){
     textAlign(CENTER, CENTER)
     textSize(20)
     fill(200)
@@ -360,7 +357,10 @@ function draw() {
     hp -= 50
   
   }else {
-    creature(creatureX, creatureY, 10, 10);
+    let creaturePosition = creature(creatureX, creatureY, 10, 10);
+    creatureX = creaturePosition.x;
+    creatureY = creaturePosition.y;
+
   }
   stars = shooting_stars(stars);
   satellites = shooting_satellites(satellites);
@@ -370,7 +370,7 @@ function draw() {
   halo(centerX, centerY, 1000, 255, 255, 255, 1);
 
   aim(mouseX, mouseY, centerX, centerY);
-  missile(); // Draw and move missiles
+  missile(); // this fucntion Draw and move missiles
   draw_sun();
   for (let i = missiles.length - 1; i >= 0; i--) {
     let m = missiles[i];
