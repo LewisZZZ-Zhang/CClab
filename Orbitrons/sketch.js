@@ -215,7 +215,7 @@ function creature(x, y, a, b) {
 function findClosestToCreature(creatureX, creatureY, satellites, missiles, mouseX, mouseY) {
   let minDistance = Infinity;
   let closestObject = [0, height];
-  // Check satellites
+  // check satellites
   for (let i = 0; i < satellites.length; i++) {
     let satX = centerX + satellites[i][1] * sin(satellites[i][0]);
     let satY = centerY + satellites[i][1] * cos(satellites[i][0]);
@@ -225,7 +225,7 @@ function findClosestToCreature(creatureX, creatureY, satellites, missiles, mouse
       closestObject = [satX, satY];
     }
   }
-  // Check mouse
+  // check mouse
   let distanceToMouse = dist(creatureX, creatureY, mouseX, mouseY);
   if (distanceToMouse < minDistance) {
     closestObject = [mouseX, mouseY];
@@ -235,7 +235,6 @@ function findClosestToCreature(creatureX, creatureY, satellites, missiles, mouse
   }
   return closestObject;
 }
-
 
 function shooting_stars(stars) {
   for (let i = 0; i < stars.length; i++) {
@@ -424,7 +423,7 @@ function draw() {
   halo(centerX, centerY, 1000, 255, 255, 255, 1);
 
   aim(mouseX, mouseY, centerX, centerY);
-  missile(); // this fucntion Draw and move missiles
+  missile(); 
   draw_sun();
   for (let i = missiles.length - 1; i >= 0; i--) {
     let m = missiles[i];
@@ -437,7 +436,7 @@ function draw() {
         centerY + sat[1] * cos(sat[0])
       );
       if (distToSatellite < 30) {
-        // Remove missile and satellite
+        // deltet missile and satellite
         let sat = satellites[j];
         let satelliteX = centerX + sat[1] * sin(sat[0]);
         let satelliteY = centerY + sat[1] * cos(sat[0]);
