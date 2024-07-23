@@ -1,7 +1,10 @@
 function setup() {
-    createCanvas(400, 400);
+    let cnv = createCanvas(400, 400);
+    cnv.parent('sketch-holder');
   }
   
 function draw() {
-    background(220);
+    background(0);
+    fill(255, 255, 255);
+    circle(200, 200+200*sin(frameCount/40), 100);
   }
