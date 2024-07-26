@@ -36,19 +36,79 @@ class YourNameDancer {
   constructor(startX, startY) {
     this.x = startX;
     this.y = startY;
+    this.hipx = startX;
+    this.hipy = startY + 30;
+    this.shoulderx = startX;
+    this.shouldery = startY - 50;
+    this.color = [122,122,122];
     // add properties for your dancer here:
     //..
     //..
     //..
   }
+
+  head(x, y, r) {
+    push();
+    translate(x, y);
+    ellipse(0, 0, r, 2 * r);
+    pop();
+
+  }
+
+  body(hipx, hipy, shoulderx, shouldery) {
+
+    strokeWeight(5);
+    rect(shoulderx - 20, shouldery, 40, hipy - shouldery);
+  }
+
+  leg(hipx, hipy, feetx, feety) {
+
+    strokeWeight(10);
+    line(hipx, hipy, feetx, feety);
+  }
+
+  arm(shoulderx, shouldery, handx, handy, LorR) {
+
+    strokeWeight(5);
+    line(shoulderx, shouldery, (handx + shoulderx) / 2 + LorR * 10, (handy + shouldery) / 2 + sin(LorR * frameCount * PI / 30) * 10);
+    line((handx + shoulderx) / 2 + LorR * 10, (handy + shouldery) / 2 + sin(LorR * frameCount * PI / 30) * 10, handx, handy + sin(LorR * frameCount * PI / 30) * 20);
+
+  }
+
+  head(x, y, r) {
+    push();
+    translate(x, y);
+    ellipse(0, 0, r, r);
+    pop();
+  }
+
   update() {
     // update properties here to achieve
     // your dancer's desired moves and behaviour
+    if (frameCount % 180 > 45 && frameCount % 180 < 105) {
+      // this.lag = random(0,2)
+    } else {
+      this.hipx = sin(frameCount * PI / 30) * 40 + this.x;
+
+      this.shoulderx = this.hipx
+      this.shouldery = this.hipy - 50
+    }
+
+    this.color = [ this.color[0]+ random(-10, 10), this.color[1]+random(-10, 10), this.color[2] + random(-10, 10)];
   }
   display() {
     // the push and pop, along with the translate 
     // places your whole dancer object at this.x and this.y.
     // you may change its position on line 19 to see the effect.
+    fill(this.color[0],this.color[1],this.color[2]);
+    stroke(this.color[0],this.color[1],this.color[2]);
+    this.leg(this.hipx - 10, this.hipy, this.x - 50, this.y + 100);
+    this.leg(this.hipx + 10, this.hipy, this.x + 50, this.y + 100);
+    this.arm(this.shoulderx - 20, this.shouldery, (this.x - 100) * 1 / 2 + this.hipx * 1 / 2, this.y - 50, -1);
+    this.arm(this.shoulderx + 20, this.shouldery, (this.x + 100) * 1 / 3 + this.hipx * 2 / 3, this.y - 50, 1);
+    this.body(this.hipx, this.hipy, this.shoulderx, this.shouldery);
+    sin(frameCount * PI / 30) * 10
+    this.head(this.shoulderx, this.shouldery - 25, 20);
     push();
     translate(this.x, this.y);
 
@@ -76,6 +136,7 @@ class YourNameDancer {
   drawReferenceShapes() {
     noFill();
     stroke(255, 0, 0);
+    strokeWeight(2);
     line(-5, 0, 5, 0);
     line(0, -5, 0, 5);
     stroke(255);
