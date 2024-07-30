@@ -2,39 +2,39 @@ let part1Img, part2Img, part3Img;
 
 class Shield {
     constructor(x, y) {
-        this.part1 = { 
-            x: x, 
-            y: y, 
-            w: part1Img.width, 
-            h: part1Img.height, 
-            dragging: false, 
+        this.part1 = {
+            x: x,
+            y: y,
+            w: part1Img.width,
+            h: part1Img.height,
+            dragging: false,
             img: part1Img,
-            x_ass: x,
-            y_ass: y,
+            x_ass: 0,
+            y_ass: 0,
         };
-        this.part2 = { 
-            x: x + part1Img.width, 
-            y: y, w: part2Img.width, 
+        this.part2 = {
+            x: x + part1Img.width,
+            y: y, w: part2Img.width,
             w: part2Img.width,
-            h: part2Img.height, 
-            dragging: false, 
+            h: part2Img.height,
+            dragging: false,
             img: part2Img,
-            x_ass: x-10,
-            y_ass: y,
+            x_ass: -10,
+            y_ass: 0,
         };
-        this.part3 = { 
-            x: x + part1Img.width + part2Img.width, 
-            y: y, 
-            w: part3Img.width, 
-            h: part3Img.height, 
-            dragging: false, 
+        this.part3 = {
+            x: x + part1Img.width + part2Img.width,
+            y: y,
+            w: part3Img.width,
+            h: part3Img.height,
+            dragging: false,
             img: part3Img,
-            x_ass: x-30,
-            y_ass: y,
+            x_ass: -30,
+            y_ass: 0,
         };
         this.parts = [
-            this.part1, 
-            this.part2, 
+            this.part1,
+            this.part2,
             this.part3
         ];
     }
@@ -49,12 +49,13 @@ class Shield {
 
         // Draw part3
         image(this.part3.img, this.part3.x, this.part3.y, this.part3.w, this.part3.h);
-    
-        fill(0 , 255, 0);
+
+        fill(0, 255, 0);
         noStroke();
-        for (let part of this.parts) {
-            ellipse(part.x, part.y, 10, 10);
-        }
+        ellipse(this.part1.x + this.part1.x_ass, this.part1.y + this.part1.y_ass, 10, 10);
+        ellipse(this.part2.x + this.part2.x_ass, this.part2.y + this.part2.y_ass, 10, 10);        
+        ellipse(this.part3.x + this.part3.x_ass, this.part3.y + this.part3.y_ass, 10, 10);
+        
     }
 
     mousePressed() {
@@ -72,7 +73,7 @@ class Shield {
             if (part.dragging) {
                 part.x = mouseX - part.offsetX;
                 part.y = mouseY - part.offsetY;
-                
+
             }
         }
     }
@@ -84,9 +85,9 @@ class Shield {
     }
 
     isComplete() {
-        const dist1 = dist(this.part1.x, this.part1.y, this.part2.x, this.part2.y);
-        const dist2 = dist(this.part2.x, this.part2.y, this.part3.x, this.part3.y);
-        const dist3 = dist(this.part3.x, this.part3.y, this.part1.x, this.part1.y);
+        const dist1 = dist(this.part1.x + this.part1.x_ass, this.part1.y + this.part1.y_ass, this.part2.x + this.part2.x_ass, this.part2.y + this.part2.y_ass);
+        const dist2 = dist(this.part2.x + this.part2.x_ass, this.part2.y + this.part2.y_ass, this.part3.x + this.part3.x_ass, this.part3.y + this.part3.y_ass);
+        const dist3 = dist(this.part3.x + this.part3.x_ass, this.part3.y + this.part3.y_ass, this.part1.x + this.part1.x_ass, this.part1.y + this.part1.y_ass);
         return dist1 < 20 && dist2 < 20 && dist3 < 20;
     }
 }
@@ -102,7 +103,7 @@ function preload() {
 function setup() {
     let cnv = createCanvas(windowWidth, windowHeight);
     cnv.parent('sketch-holder');
-    shield = new Shield(width/2 -200, height/2);
+    shield = new Shield(width / 2 - 200, height / 2);
 }
 
 function draw() {
