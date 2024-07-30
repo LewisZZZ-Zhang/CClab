@@ -1,6 +1,6 @@
 let fireworks = [];
 let particles = [];
-const gravity = 0.25;
+const gravity = 0.16;
 const colors = ['red', 'orange', 'yellow', 'lime', 'cyan', 'magenta', 'white'];
 
 function setup() {
@@ -65,7 +65,7 @@ class Firework {
     this.x = x;
     this.y = y;
     this.xSpeed = random(-2, 2);
-    this.ySpeed = random(-12, -20);
+    this.ySpeed = random(-8, -15);
     this.color = random(colors);
     this.size = 10;
     this.isExploded = false;
@@ -93,7 +93,7 @@ class Firework {
 
   explode() {
     this.isExploded = true;
-    for (let i = 0; i < 20; i++) {
+    for (let i = 0; i < 30; i++) {
       particles.push(new Particle(this.x, this.y, random(-10, 10), random(-10, 10), this.color, 5));
     }
   }
