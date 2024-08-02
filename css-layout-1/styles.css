@@ -1,3 +1,51 @@
 body{
     background-color: #66ccff;
 }
+
+#hightlight{
+    background-color: #ff0000;
+    color: #ffffff;
+}
+
+
+.textbox{
+    color: #000000;
+    background-color: #ffffff;
+    font-size: 20px;
+    border-style: double;
+    border-color: #000000;
+    border-width: 5px;
+
+    margin: 10px;
+    padding: 16px;
+
+}
+
+#sketch-holder{
+    margin: 10px;
+    padding: 16px;
+    background-color: #ffffff;
+    border-style: double;
+    border-color: #000000;
+    border-width: 5px;
+}
+
+
+.one{
+    position:absolute;
+    top: 10px;
+    left: 10px;
+
+}
+
+.two{
+    position:fixed;
+    bottom: 10px;
+    right: 10px;
+}
+
+.three{
+    position:relative;
+    top: 200px;
+    left: 10px;
+}
