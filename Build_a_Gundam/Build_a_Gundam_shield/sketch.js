@@ -1,6 +1,6 @@
 class Shield {
     constructor(x, y) {
-        this.part1 = {
+        this.part1 = { // B2/5, white
             x: x - 200,
             y: y,
             w: part1Img.width / 3,
@@ -10,7 +10,7 @@ class Shield {
             x_ass: 0,
             y_ass: 0,
             sprue: 3,
-            where: [870, 190],
+            where: [670, 130, 985, 255],
             found: false,
         };
         this.part2 = {
@@ -23,7 +23,7 @@ class Shield {
             x_ass: -11,
             y_ass: -3,
             sprue: 2,
-            where: [835, 585],
+            where: [690, 520, 980, 640],
             found: false,
         };
         this.part3 = {
@@ -36,7 +36,7 @@ class Shield {
             x_ass: -23,
             y_ass: -78,
             sprue: 2,
-            where: [315, 200],
+            where: [275, 130, 335, 300],
             found: false,
         };
         this.parts = [
@@ -78,7 +78,7 @@ class Shield {
 
     mousePressed() {
         for (let part of this.parts) {
-            if (part.found && mouseX > part.x - part.w / 2 && mouseX < part.x + part.w / 2 && mouseY > part.y - part.h / 2 && mouseY < part.y + part.h / 2) {
+            if (!videoplay &&!isZoomed && zoomedSprue == null && part.found && mouseX > part.x - part.w / 2 && mouseX < part.x + part.w / 2 && mouseY > part.y - part.h / 2 && mouseY < part.y + part.h / 2) {
                 part.dragging = true;
                 part.offsetX = mouseX - part.x;
                 part.offsetY = mouseY - part.y;
@@ -115,6 +115,7 @@ class Shield {
 let shield;
 let part1Img, part2Img, part3Img, guideImg;
 let Sprue1, Sprue2, Sprue3, Sprue4;
+let cut1, cut2, cut3
 let imgX, imgY, imgWidth, imgHeight;
 let isZoomed = false;
 let mindist = 10;
@@ -124,28 +125,42 @@ let sprues = [];
 let spruePositions = [];
 let sprueSize = 130; // Initial size of the sprues
 let zoomedSprue = null; // To keep track of the zoomed sprue
-let spruenames = [["A1", "A2"], ["A3","A4"], ["B1", "B2"], ["B3","B4"]]
+let spruenames = [["A1", "A2"], ["A3", "A4"], ["B1", "B2"], ["B3", "B4"]]
+
+let wrongtime = -200;
+let wrongpos = [0, 0];
+let flagfound = 0;
+
+let assembling;
+let videocanplay = false
+
+let cheerplayed = false
+let videoplay = false
 
 function preload() {
     part1Img = loadImage('assets/sheild1.png', () => console.log('part1Img loaded'), () => console.error('Failed to load part1Img'));
     part2Img = loadImage('assets/sheild2.png', () => console.log('part2Img loaded'), () => console.error('Failed to load part2Img'));
     part3Img = loadImage('assets/sheild3.png', () => console.log('part3Img loaded'), () => console.error('Failed to load part3Img'));
     guideImg = loadImage('assets/guide.jpg', () => console.log('guidebook loaded'), () => console.error('Failed to load guidebook'));
-    //     Sprue1 = loadImage('assets/sprue1.png', () => console.log('Sprue1 loaded'), () => console.error('Failed to load Sprue1'));
-    //     Sprue2 = loadImage('assets/sprue2.png', () => console.log('Sprue2 loaded'), () => console.error('Failed to load Sprue2'));
-    //     Sprue3 = loadImage('assets/sprue3.png', () => console.log('Sprue3 loaded'), () => console.error('Failed to load Sprue3'));
-    //     Sprue4 = loadImage('assets/sprue4.png', () => console.log('Sprue4 loaded'), () => console.error('Failed to load Sprue4'));
-
+    wrongsign = loadImage('assets/wrong.png', () => console.log('wrongsign loaded'), () => console.error('Failed to load wrongsign'));
     for (let i = 0; i < 4; i++) {
         sprues[i] = loadImage(`assets/sprue${i + 1}.png`);
     }
+    cut1 = loadSound('assets/cut1.mp3', () => console.log('cut1 loaded'), () => console.error('Failed to load cut1'));
+    cut2 = loadSound('assets/cut2.mp3', () => console.log('cut2 loaded'), () => console.error('Failed to load cut2'));
+    cut3 = loadSound('assets/cut3.mp3', () => console.log('cut3 loaded'), () => console.error('Failed to load cut3'));
 
+    sp1 = loadSound('assets/sp1.mp3', () => console.log('sp1 loaded'), () => console.error('Failed to load sp1'));
+    sp2 = loadSound('assets/sp2.mp3', () => console.log('sp2 loaded'), () => console.error('Failed to load sp2'));
+    sp3 = loadSound('assets/sp3.mp3', () => console.log('sp3 loaded'), () => console.error('Failed to load sp3'));
+
+    cheerSound = loadSound('assets/cheer.mp3', () => console.log('cheerSound loaded'), () => console.error('Failed to load cheerSound'));
 
 }
 
 function windowResized() {
     // Resize the canvas when the window is resized
-    resizeCanvas(1300, 720);
+    resizeCanvas(1280, 720);
     for (let i = 0; i < 4; i++) {
         spruePositions[i] = {
             x: width / 8 * 7,
@@ -155,13 +170,16 @@ function windowResized() {
 }
 
 function setup() {
-    let cnv = createCanvas(1300, 720);
+    let cnv = createCanvas(1280, 720);
     cnv.parent('sketch-holder');
     shield = new Shield(width / 2, height / 2);
     imgWidth = 300;
     imgHeight = 300;
     imgX = 10;
     imgY = height / 2 - (width / 4 * imgHeight / imgWidth) / 2;
+    assembling = createVideo(['assets/testvideo.mov']);
+    assembling.size(960,  540 );
+    assembling.hide(); // Hide the default video controls
 
 
     for (let i = 0; i < 4; i++) {
@@ -172,12 +190,8 @@ function setup() {
     }
 }
 
-
-
-
-
-
 function back_ground() {
+    rectMode(CORNER);
     background(220);
     noStroke();
     fill(0);
@@ -188,29 +202,39 @@ function back_ground() {
     textSize(32);
     textAlign(CENTER, CENTER);
     text('Guide', width / 8, 50);
-
-    text('Working Area', width / 2, 50);
     text('Sprues', width / 8 * 7, 50);
     textSize(16);
     text("(Click to enlarge it.)", width / 8, 80);
+    text("(Click to find the parts.)", width / 8 * 7, 80);
 
     for (let i = 0; i < sprues.length; i++) {
         imageMode(CORNER);
         image(sprues[i], spruePositions[i].x, spruePositions[i].y, sprueSize, sprueSize);
-        textSize(16);
+        textSize(32);
         textAlign(CENTER, CENTER);
-        text(spruenames[i][0]+" & "+spruenames[i][1] , spruePositions[i].x - sprueSize/2, spruePositions[i].y + sprueSize / 2);
+        text(spruenames[i][0] + " & " + spruenames[i][1], spruePositions[i].x - sprueSize / 2, spruePositions[i].y + sprueSize / 2);
     }
+    fill(0);
+    textSize(32);
+    text('Working Area', width / 2, 50);
 }
 
 function draw() {
     back_ground()
     shield.display();
     if (shield.isComplete()) {
+        if (!cheerplayed){
+            cheerSound.setVolume(0.5)
+            cheerSound.play();
+        }
+        cheerplayed = true;
+        videocanplay = true;
         fill(0, 255, 0);
         textSize(32);
         textAlign(CENTER, CENTER);
-        text('Shield Completed!', width / 2, height - 50);
+        if (!videoplay){
+            text('Completed!', width / 2, height - 75);
+        }
         let done = document.getElementById('done');
         done.style.display = 'block';
     } else {
@@ -239,15 +263,41 @@ function draw() {
         image(sprues[zoomedSprue], width / 2, height / 2, 960, 720);
     }
 
-    fill(255);
-    textSize(16);
-    textAlign(LEFT, TOP);
-    text(`mouseX: ${mouseX}, mouseY: ${mouseY}`, 10, 10);
+    // fill(255);
+    // textSize(16);
+    // textAlign(LEFT, TOP);
+    // text(`mouseX: ${mouseX}, mouseY: ${mouseY}`, 10, 10);
+
+    if (wrongtime <= 30 && wrongtime >= 0) {
+        wrongtime++
+        imageMode(CENTER);
+        image(wrongsign, wrongpos[0], wrongpos[1], 100, 100);
+    }
+
+    if (videocanplay && !videoplay) {
+        rectMode(CENTER);
+        fill(0, 0, 0, 150);
+        rect(width / 2, height - 30, 300, 50);
+        textSize(16);
+        fill(255);
+        textAlign(CENTER, CENTER);
+        text('Click here to watch the assembling video', width / 2, height - 30);
+
+    }
+
+    if (videoplay) {
+        imageMode(CENTER);
+        image(assembling, width / 2, height / 2, 960, 540);
+        textSize(32);
+        fill(0);
+        textAlign(CENTER, CENTER);
+        text('Click the video to play/pause', width / 2, height - 30);
+    }
 }
 
 function mousePressed() {
     // Check if the mouse is over the image
-    if (!isZoomed && mouseX > imgX && mouseX < imgX + imgWidth && mouseY > imgY && mouseY < imgY + imgHeight) {
+    if (!isZoomed && mouseX > imgX && mouseX < imgX + imgWidth && mouseY > imgY && mouseY < imgY + imgHeight && zoomedSprue == null) {
         isZoomed = true;
     } else if (isZoomed) {
         isZoomed = false;
@@ -257,19 +307,59 @@ function mousePressed() {
 
     if (zoomedSprue !== null) {
         for (let part of shield.parts) {
-            if (part.sprue == zoomedSprue + 1 && dist(mouseX, mouseY, part.where[0], part.where[1]) < 100) {
+            if (part.sprue == zoomedSprue + 1 && mouseX > part.where[0] && mouseX < part.where[2] && mouseY > part.where[1] && mouseY < part.where[3]) {
                 part.found = true;
+                flagfound = 1
+
+                let randomSound = Math.floor(Math.random() * 3);
+                if (randomSound === 0) {
+                    cut1.play();
+                } else if (randomSound === 1) {
+                    cut2.play();
+                } else {
+                    cut3.play();
+                }
             }
         }
+        if (flagfound == 0 && mouseX > width / 2 - 480 && mouseX < width / 2 + 480) {
+            wrongtime = 0
+            wrongpos = [mouseX, mouseY]
+        }
+        flagfound = 0
     }
 
     for (let i = 0; i < spruePositions.length; i++) {
         let pos = spruePositions[i];
         if (mouseX > pos.x && mouseX < pos.x + sprueSize && mouseY > pos.y && mouseY < pos.y + sprueSize) {
             zoomedSprue = i;
+            let randomSound = Math.floor(Math.random() * 3);
+            if (randomSound === 0) {
+              sp1.play();
+            } else if (randomSound === 1) {
+              sp2.play();
+            } else {
+              sp3.play();
+            }
+            
             break;
         } else {
             zoomedSprue = null;
+        }
+    }
+
+    if (videocanplay && mouseX > width / 2 - 150 && mouseX < width / 2 + 150 && mouseY > height - 55 && mouseY < height - 5) {
+        imageMode(CENTER);
+        image(assembling, width / 2, height / 2, 960, 540);
+        videoplay = true
+    }
+
+    if (videoplay) {
+        if (mouseX > width / 2 - 320 && mouseX < width / 2 + 320 && mouseY > height / 2 - 240 && mouseY < height / 2 + 240) {
+            if (assembling.elt.paused) {
+                assembling.play(); // Play the video on mouse press
+            } else {
+                assembling.pause(); // Pause the video if it's playing
+            }
         }
     }
 
