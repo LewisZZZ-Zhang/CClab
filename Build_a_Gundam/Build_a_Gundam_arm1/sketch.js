@@ -1,4 +1,4 @@
-let testing = true;
+let testing = false;
 
 let shield;
 let part1Img, part2Img, part3Img, guideImg;
@@ -294,17 +294,17 @@ function draw() {
     back_ground()
     shield.display();
     if (shield.isComplete() || keyIsDown(71)) {
-        if (!cheerplayed) {
-            cheerSound.setVolume(0.5);
-            cheerSound.play();
-        }
-        cheerplayed = true;
-        videocanplay = true;
+        // if (!cheerplayed) {
+        //     cheerSound.setVolume(0.5);
+        //     cheerSound.play();
+        // }
+        // cheerplayed = true;
+        // videocanplay = true;
         fill(0, 255, 0);
         textSize(32);
         textAlign(CENTER, CENTER);
         if (!videoplay) {
-            text('Completed!', width / 2, height - 75);
+            text('Done! Go to the next step', width / 2, height - 75);
         }
         let done = document.getElementById('done');
         done.style.display = 'block';
@@ -392,7 +392,6 @@ function draw() {
         }
     }
 }
-
 function mousePressed() {
     // Check if the mouse is over the image
     if (!isZoomed && mouseX > imgX && mouseX < imgX + imgWidth && mouseY > imgY && mouseY < imgY + imgHeight && zoomedSprue == null) {
@@ -472,10 +471,10 @@ function mouseReleased() {
 }
 
 function createExplosion(x, y, a) {
-    let numParticles = 50;
+    let numParticles = 15;
     for (let i = 0; i < numParticles; i++) {
         let angle = random(PI, PI * 3/2);
-        let speed = random(2, 15);
+        let speed = random(10, 15);
         let xSpeed = a * cos(angle) * speed;
         let ySpeed = sin(angle) * speed;
         let pColor = random(colors);

@@ -256,7 +256,7 @@ function draw() {
         textSize(32);
         textAlign(CENTER, CENTER);
         if (!videoplay) {
-            text('Completed!', width / 2, height - 75);
+            text('Gun completed!', width / 2, height - 75);
         }
         let done = document.getElementById('done');
         done.style.display = 'block';
@@ -422,10 +422,10 @@ function mouseReleased() {
 }
 
 function createExplosion(x, y, a) {
-    let numParticles = 50;
+    let numParticles = 15;
     for (let i = 0; i < numParticles; i++) {
         let angle = random(PI, PI * 3/2);
-        let speed = random(2, 15);
+        let speed = random(10, 15);
         let xSpeed = a * cos(angle) * speed;
         let ySpeed = sin(angle) * speed;
         let pColor = random(colors);
@@ -433,5 +433,4 @@ function createExplosion(x, y, a) {
         particles.push(new Particle(x, y, xSpeed, ySpeed, pColor, size));
     }
 }
-
 

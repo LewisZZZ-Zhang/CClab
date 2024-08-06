@@ -256,7 +256,7 @@ function draw() {
         textSize(32);
         textAlign(CENTER, CENTER);
         if (!videoplay) {
-            text('Completed!', width / 2, height - 75);
+            text('Shield completed!', width / 2, height - 75);
         }
         let done = document.getElementById('done');
         done.style.display = 'block';

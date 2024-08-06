@@ -98,7 +98,7 @@ let part1Img, part2Img, part3Img, guideImg;
 let imgX, imgY, imgWidth, imgHeight;
 let isZoomed = false;
 let mindist = 10
-let testing = false
+let testing = false;
 
 function preload() {
     part1Img = loadImage('assets/sheild1.png', () => console.log('part1Img loaded'), () => console.error('Failed to load part1Img'));
@@ -143,7 +143,7 @@ function draw() {
         fill(0, 255, 0);
         textSize(32);
         textAlign(CENTER, CENTER);
-        text('Shield Completed!', width / 2, height-50);
+        // text('Shield Completed!', width / 2, height-50);
         let done = document.getElementById('done');
         done.style.display = 'block';
     }else{

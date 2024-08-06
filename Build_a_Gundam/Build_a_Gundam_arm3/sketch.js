@@ -1,4 +1,4 @@
-let testing = true;
+let testing = false;
 
 let shield;
 let part1Img, part2Img, part3Img, guideImg;
@@ -69,7 +69,7 @@ class Shield {
             y_ass: -70,
             sprue: 0,
             where: [0,0,0,0],
-            found: true,
+            found: false,
         };
         this.part4 = {
             x: x - 200,
@@ -313,6 +313,15 @@ function back_ground() {
 function draw() {
     back_ground()
     shield.display();
+    if (shield.part3.found == false) {
+        rectMode(CENTER);
+        fill(0, 0, 0, 150);
+        rect(width / 2, height - 30, 300, 50);
+        textSize(16);
+        fill(255);
+        textAlign(CENTER, CENTER);
+        text('Duplicate the other arm', width / 2, height - 30);
+    }
     if (shield.isComplete() || keyIsDown(71)) {
         if (!cheerplayed) {
             cheerSound.setVolume(0.5);
@@ -324,7 +333,7 @@ function draw() {
         textSize(32);
         textAlign(CENTER, CENTER);
         if (!videoplay) {
-            text('Completed!', width / 2, height - 75);
+            text('The upper body is completed!', width / 2, height - 75);
         }
         let done = document.getElementById('done');
         done.style.display = 'block';
@@ -423,6 +432,10 @@ function mousePressed() {
         shield.mousePressed();
     }
 
+    if (shield.part3.found == false && mouseX > width / 2 - 150 && mouseX < width / 2 + 150 && mouseY > height - 30 && mouseY < height - 5) {
+        shield.part3.found = true;
+    }
+
     if (zoomedSprue !== null) {
         for (let part of shield.parts) {
             if (part.sprue == zoomedSprue + 1 && mouseX > part.where[0] && mouseX < part.where[2] && mouseY > part.where[1] && mouseY < part.where[3]) {
@@ -492,10 +505,10 @@ function mouseReleased() {
 }
 
 function createExplosion(x, y, a) {
-    let numParticles = 50;
+    let numParticles = 15;
     for (let i = 0; i < numParticles; i++) {
         let angle = random(PI, PI * 3/2);
-        let speed = random(2, 15);
+        let speed = random(10, 15);
         let xSpeed = a * cos(angle) * speed;
         let ySpeed = sin(angle) * speed;
         let pColor = random(colors);
