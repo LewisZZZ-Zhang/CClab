@@ -9,7 +9,7 @@ function setup() {
 }
 
 function mousePressed() {
-  fireworks.push(new Firework(mouseX, height));
+  createExplosion(mouseX, mouseY);
 }
 
 function draw() {
@@ -32,6 +32,19 @@ function draw() {
   }
 }
 
+function createExplosion(x, y) {
+  let numParticles = 100;
+  for (let i = 0; i < numParticles; i++) {
+    let angle = random(PI, TWO_PI);
+    let speed = random(2, 15);
+    let xSpeed = cos(angle) * speed;
+    let ySpeed = sin(angle) * speed;
+    let pColor = random(colors);
+    let size = random(5, 10);
+    particles.push(new Particle(x, y, xSpeed, ySpeed, pColor, size));
+  }
+}
+
 class Particle {
   constructor(x, y, xSpeed, ySpeed, pColor, size) {
     this.x = x;
@@ -44,57 +57,18 @@ class Particle {
   }
 
   update() {
-    this.ySpeed += gravity;
     this.x += this.xSpeed;
     this.y += this.ySpeed;
-
-    if (this.y > height) {
+    this.ySpeed += gravity;
+    this.size *= 0.95; // Shrink over time
+    if (this.size < 0.5) {
       this.isAlive = false;
     }
   }
 
   display() {
-    fill(this.color);
     noStroke();
+    fill(this.color);
     ellipse(this.x, this.y, this.size);
-  }
-}
-
-class Firework {
-  constructor(x, y) {
-    this.x = x;
-    this.y = y;
-    this.xSpeed = random(-2, 2);
-    this.ySpeed = random(-8, -15);
-    this.color = random(colors);
-    this.size = 10;
-    this.isExploded = false;
-  }
-
-  update() {
-    if (!this.isExploded) {
-      this.ySpeed += gravity;
-      this.x += this.xSpeed;
-      this.y += this.ySpeed;
-
-      if (this.ySpeed >= 0) {
-        this.explode();
-      }
-    }
-  }
-
-  display() {
-    if (!this.isExploded) {
-      fill(this.color);
-      noStroke();
-      ellipse(this.x, this.y, this.size);
-    }
-  }
-
-  explode() {
-    this.isExploded = true;
-    for (let i = 0; i < 30; i++) {
-      particles.push(new Particle(this.x, this.y, random(-10, 10), random(-10, 10), this.color, 5));
-    }
   }
 }

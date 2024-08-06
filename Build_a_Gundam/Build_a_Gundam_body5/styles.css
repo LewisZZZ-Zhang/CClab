@@ -1,0 +1,29 @@
+body {
+    background-color: #66ccff;
+}
+
+#done {
+    display: none;
+    background-color: #ffcc00;
+    color: #000000;
+    font-size: 20px;
+    border-radius: 10px;
+    text-align: center;
+    position: fixed;
+    bottom: 10px;
+    right: 10px;
+    width: 200px; /* Set the desired width */
+    height: 50px; /* Set the desired height */
+    padding: 16px;
+    padding-top: 1px;
+}
+
+#sketch-holder {
+    width: 1280px;
+    height: 720px;
+    position: absolute;
+    right: 30px;
+    margin: 0;
+    /* transform: scale(calc(100vw -400px / 1280)); 
+    transform-origin: top right;  */
+}

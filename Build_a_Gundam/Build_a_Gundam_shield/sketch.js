@@ -1,3 +1,34 @@
+let shield;
+let part1Img, part2Img, part3Img, guideImg;
+let Sprue1, Sprue2, Sprue3, Sprue4;
+let cut1, cut2, cut3
+let imgX, imgY, imgWidth, imgHeight;
+let isZoomed = false;
+let mindist = 10;
+let testing = false;
+
+let sprues = [];
+let spruePositions = [];
+let sprueSize = 130; // Initial size of the sprues
+let zoomedSprue = null; // To keep track of the zoomed sprue
+let spruenames = [["A1", "A2"], ["A3", "A4"], ["B1", "B2"], ["B3", "B4"]]
+
+let wrongtime = -200;
+let wrongpos = [0, 0];
+let flagfound = 0;
+
+let assembling;
+let videocanplay = false
+
+let cheerplayed = false
+let videoplay = false
+
+let fireworks = [];
+let particles = [];
+let gravity = 0.16;
+let colors = ['red', 'orange', 'yellow', 'lime', 'cyan', 'magenta', 'white'];
+let exploded = false
+
 class Shield {
     constructor(x, y) {
         this.part1 = { // B2/5, white
@@ -112,35 +143,38 @@ class Shield {
     }
 }
 
-let shield;
-let part1Img, part2Img, part3Img, guideImg;
-let Sprue1, Sprue2, Sprue3, Sprue4;
-let cut1, cut2, cut3
-let imgX, imgY, imgWidth, imgHeight;
-let isZoomed = false;
-let mindist = 10;
-let testing = false;
+class Particle {
+    constructor(x, y, xSpeed, ySpeed, pColor, size) {
+        this.x = x;
+        this.y = y;
+        this.xSpeed = xSpeed;
+        this.ySpeed = ySpeed;
+        this.color = pColor;
+        this.size = size;
+        this.isAlive = true;
+    }
 
-let sprues = [];
-let spruePositions = [];
-let sprueSize = 130; // Initial size of the sprues
-let zoomedSprue = null; // To keep track of the zoomed sprue
-let spruenames = [["A1", "A2"], ["A3", "A4"], ["B1", "B2"], ["B3", "B4"]]
+    update() {
+        this.x += this.xSpeed;
+        this.y += this.ySpeed;
+        this.ySpeed += gravity;
+        this.size *= 0.95; // Shrink over time
+        if (this.size < 0.5) {
+            this.isAlive = false;
+        }
+    }
 
-let wrongtime = -200;
-let wrongpos = [0, 0];
-let flagfound = 0;
-
-let assembling;
-let videocanplay = false
-
-let cheerplayed = false
-let videoplay = false
+    display() {
+        noStroke();
+        fill(this.color);
+        ellipse(this.x, this.y, this.size);
+    }
+}
 
 function preload() {
-    part1Img = loadImage('assets/sheild1.png', () => console.log('part1Img loaded'), () => console.error('Failed to load part1Img'));
-    part2Img = loadImage('assets/sheild2.png', () => console.log('part2Img loaded'), () => console.error('Failed to load part2Img'));
-    part3Img = loadImage('assets/sheild3.png', () => console.log('part3Img loaded'), () => console.error('Failed to load part3Img'));
+    part1Img = loadImage('assets/shield1.png', () => console.log('part1Img loaded'), () => console.error('Failed to load part1Img'));
+    part2Img = loadImage('assets/shield2.png', () => console.log('part2Img loaded'), () => console.error('Failed to load part2Img'));
+    part3Img = loadImage('assets/shield3.png', () => console.log('part3Img loaded'), () => console.error('Failed to load part3Img'));
     guideImg = loadImage('assets/guide.jpg', () => console.log('guidebook loaded'), () => console.error('Failed to load guidebook'));
     wrongsign = loadImage('assets/wrong.png', () => console.log('wrongsign loaded'), () => console.error('Failed to load wrongsign'));
     for (let i = 0; i < 4; i++) {
@@ -156,17 +190,6 @@ function preload() {
 
     cheerSound = loadSound('assets/cheer.mp3', () => console.log('cheerSound loaded'), () => console.error('Failed to load cheerSound'));
 
-}
-
-function windowResized() {
-    // Resize the canvas when the window is resized
-    resizeCanvas(1280, 720);
-    for (let i = 0; i < 4; i++) {
-        spruePositions[i] = {
-            x: width / 8 * 7,
-            y: 100 + i * (sprueSize + 20)
-        };
-    }
 }
 
 function setup() {
@@ -223,7 +246,7 @@ function draw() {
     back_ground()
     shield.display();
     if (shield.isComplete()) {
-        if (!cheerplayed){
+        if (!cheerplayed) {
             cheerSound.setVolume(0.5)
             cheerSound.play();
         }
@@ -232,7 +255,7 @@ function draw() {
         fill(0, 255, 0);
         textSize(32);
         textAlign(CENTER, CENTER);
-        if (!videoplay){
+        if (!videoplay) {
             text('Completed!', width / 2, height - 75);
         }
         let done = document.getElementById('done');
@@ -263,10 +286,10 @@ function draw() {
         image(sprues[zoomedSprue], width / 2, height / 2, 960, 720);
     }
 
-    // fill(255);
-    // textSize(16);
-    // textAlign(LEFT, TOP);
-    // text(`mouseX: ${mouseX}, mouseY: ${mouseY}`, 10, 10);
+    fill(255);
+    textSize(16);
+    textAlign(LEFT, TOP);
+    text(`mouseX: ${mouseX}, mouseY: ${mouseY}`, 10, 10);
 
     if (wrongtime <= 30 && wrongtime >= 0) {
         wrongtime++
@@ -274,7 +297,7 @@ function draw() {
         image(wrongsign, wrongpos[0], wrongpos[1], 100, 100);
     }
 
-    if (videocanplay && !videoplay) {
+    if (shield.isComplete() && videocanplay && !videoplay) {
         rectMode(CENTER);
         fill(0, 0, 0, 150);
         rect(width / 2, height - 30, 300, 50);
@@ -282,16 +305,41 @@ function draw() {
         fill(255);
         textAlign(CENTER, CENTER);
         text('Click here to watch the assembling video', width / 2, height - 30);
+        if (exploded ==  false) {
+            exploded = 0
+        }
+        if (exploded <= 180) {
+            createExplosion(0, height, -1);
+            createExplosion(width, height, 1);
+            exploded ++
+        }
 
     }
 
     if (videoplay) {
+        background(0, 0, 0, 200);
         imageMode(CENTER);
         image(assembling, width / 2, height / 2, 960, 540);
         textSize(32);
         fill(0);
         textAlign(CENTER, CENTER);
         text('Click the video to play/pause', width / 2, height - 30);
+    }
+
+    for (let i = fireworks.length - 1; i >= 0; i--) {
+        fireworks[i].update();
+        fireworks[i].display();
+        if (fireworks[i].isExploded) {
+            fireworks.splice(i, 1);
+        }
+    }
+
+    for (let i = particles.length - 1; i >= 0; i--) {
+        particles[i].update();
+        particles[i].display();
+        if (!particles[i].isAlive) {
+            particles.splice(i, 1);
+        }
     }
 }
 
@@ -334,13 +382,13 @@ function mousePressed() {
             zoomedSprue = i;
             let randomSound = Math.floor(Math.random() * 3);
             if (randomSound === 0) {
-              sp1.play();
+                sp1.play();
             } else if (randomSound === 1) {
-              sp2.play();
+                sp2.play();
             } else {
-              sp3.play();
+                sp3.play();
             }
-            
+
             break;
         } else {
             zoomedSprue = null;
@@ -371,4 +419,17 @@ function mouseDragged() {
 
 function mouseReleased() {
     shield.mouseReleased();
+}
+
+function createExplosion(x, y, a) {
+    let numParticles = 15;
+    for (let i = 0; i < numParticles; i++) {
+        let angle = random(PI, PI * 3/2);
+        let speed = random(10, 15);
+        let xSpeed = a * cos(angle) * speed;
+        let ySpeed = sin(angle) * speed;
+        let pColor = random(colors);
+        let size = random(10, 15);
+        particles.push(new Particle(x, y, xSpeed, ySpeed, pColor, size));
+    }
 }
