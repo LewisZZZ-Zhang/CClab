@@ -200,7 +200,7 @@ function setup() {
     imgHeight = 300;
     imgX = 10;
     imgY = height / 2 - (width / 4 * imgHeight / imgWidth) / 2;
-    assembling = createVideo(['assets/testvideo.mov']);
+    assembling = createVideo(['assets/testvideo.mp4']);
     assembling.size(960,  540 );
     assembling.hide(); // Hide the default video controls
 
@@ -225,7 +225,7 @@ function back_ground() {
     textSize(32);
     textAlign(CENTER, CENTER);
     text('Guide', width / 8, 50);
-    text('Sprues', width / 8 * 7, 50);
+    text('Runners', width / 8 * 7, 50);
     textSize(16);
     text("(Click to enlarge it.)", width / 8, 80);
     text("(Click to find the parts.)", width / 8 * 7, 80);

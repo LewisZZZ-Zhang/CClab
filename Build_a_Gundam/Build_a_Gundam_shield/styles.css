@@ -1,5 +1,5 @@
 body {
-    background-color: #66ccff;
+    background-color: #00273a;
 }
 
 #done {
@@ -30,12 +30,12 @@ body {
 
 #left-list {
     width: calc(100vw - 1450px);;
-    height: 720px;
+    height: 670px;
     padding: 40px;
-    padding-top: 10px;
+    padding-top: 5px;
     background-color: #f0f0f0;
     margin-left: 20px;
-    font-size: 25px;
+    font-size: 24px;
     line-height: 0.6; /* Adjust the leading here */
 }
 
@@ -47,6 +47,7 @@ body {
 
 #left-list ul ul {
     padding-left: 40px;
+    font-size: 20px;
 }
 
 .highlight {
@@ -57,8 +58,17 @@ body {
 
 #text-box {
     margin-top: 20px;
-    padding: 20px;
+    margin: 30px ;
+    padding: 30px;
     background-color: #e0e0e0;
     border: 1px solid #ccc;
     border-radius: 5px;
+    font-size: 20px;
+}
+
+#title {
+    font-size: 30px;
+    font-weight: bold;
+    margin-bottom: 20px;
+    color: #ffffff;
 }

@@ -1,5 +1,5 @@
 body {
-    background-color: #66ccff;
+    background-color: #00273a;
 }
 
 #done {
@@ -26,4 +26,49 @@ body {
     margin: 0;
     /* transform: scale(calc(100vw -400px / 1280)); 
     transform-origin: top right;  */
+}
+
+#left-list {
+    width: calc(100vw - 1450px);;
+    height: 670px;
+    padding: 40px;
+    padding-top: 5px;
+    background-color: #f0f0f0;
+    margin-left: 20px;
+    font-size: 24px;
+    line-height: 0.6; /* Adjust the leading here */
+}
+
+#left-list ul {
+    list-style-type:square;
+    padding: 0;
+    line-height: 0.95; /* Adjust the leading here */
+}
+
+#left-list ul ul {
+    padding-left: 40px;
+    font-size: 20px;
+}
+
+.highlight {
+    background-color: yellow;
+    font-weight: bold;
+}
+
+
+#text-box {
+    margin-top: 20px;
+    margin: 30px ;
+    padding: 30px;
+    background-color: #e0e0e0;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 20px;
+}
+
+#title {
+    font-size: 30px;
+    font-weight: bold;
+    margin-bottom: 20px;
+    color: #ffffff;
 }
