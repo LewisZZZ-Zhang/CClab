@@ -78,18 +78,18 @@ class Shield {
     }
 
     display() {
-        // Draw part1
+     
         imageMode(CENTER);
         if (this.part1.found) {
             image(this.part1.img, this.part1.x, this.part1.y, this.part1.w, this.part1.h);
         }
 
-        // Draw part2
+      
         if (this.part2.found) {
             image(this.part2.img, this.part2.x, this.part2.y, this.part2.w, this.part2.h);
         }
 
-        // Draw part3
+     
         if (this.part3.found) {
             image(this.part3.img, this.part3.x, this.part3.y, this.part3.w, this.part3.h);
         }

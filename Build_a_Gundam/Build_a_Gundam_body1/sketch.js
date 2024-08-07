@@ -10,8 +10,8 @@ let mindist = 10;
 
 let sprues = [];
 let spruePositions = [];
-let sprueSize = 130; // Initial size of the sprues
-let zoomedSprue = null; // To keep track of the zoomed sprue
+let sprueSize = 130;
+let zoomedSprue = null; 
 let spruenames = [["A1", "A2"], ["A3", "A4"], ["B1", "B2"], ["B3", "B4"]]
 
 let wrongtime = -200;
@@ -373,7 +373,7 @@ function draw() {
 }
 
 function mousePressed() {
-    // Check if the mouse is over the image
+  
     if (!isZoomed && mouseX > imgX && mouseX < imgX + imgWidth && mouseY > imgY && mouseY < imgY + imgHeight && zoomedSprue == null) {
         isZoomed = true;
     } else if (isZoomed) {
@@ -435,7 +435,7 @@ function mousePressed() {
             if (assembling.elt.paused) {
                 assembling.play(); // Play the video on mouse press
             } else {
-                assembling.pause(); // Pause the video if it's playing
+                assembling.pause();
             }
         }
     }

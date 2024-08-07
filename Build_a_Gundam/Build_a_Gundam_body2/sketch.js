@@ -10,8 +10,8 @@ let mindist = 10;
 
 let sprues = [];
 let spruePositions = [];
-let sprueSize = 130; // Initial size of the sprues
-let zoomedSprue = null; // To keep track of the zoomed sprue
+let sprueSize = 130; 
+let zoomedSprue = null; 
 let spruenames = [["A1", "A2"], ["A3", "A4"], ["B1", "B2"], ["B3", "B4"]]
 
 let wrongtime = -200;
@@ -93,13 +93,13 @@ class Shield {
     }
 
     display() {
-        // Draw part1
+
         imageMode(CENTER);
         if (this.part1.found) {
             image(this.part1.img, this.part1.x, this.part1.y, this.part1.w, this.part1.h);
         }
 
-        // Draw part2
+
         if (this.part2.found) {
             image(this.part2.img, this.part2.x, this.part2.y, this.part2.w, this.part2.h);
         }
@@ -433,9 +433,9 @@ function mousePressed() {
     if (videoplay) {
         if (mouseX > width / 2 - 320 && mouseX < width / 2 + 320 && mouseY > height / 2 - 240 && mouseY < height / 2 + 240) {
             if (assembling.elt.paused) {
-                assembling.play(); // Play the video on mouse press
+                assembling.play(); 
             } else {
-                assembling.pause(); // Pause the video if it's playing
+                assembling.pause();
             }
         }
     }

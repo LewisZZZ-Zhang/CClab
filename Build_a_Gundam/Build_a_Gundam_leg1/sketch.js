@@ -93,23 +93,22 @@ class Shield {
     }
 
     display() {
-        // Draw part1
+      
         imageMode(CENTER);
         if (this.part1.found) {
             image(this.part1.img, this.part1.x, this.part1.y, this.part1.w, this.part1.h);
         }
 
-        // Draw part2
+      
         if (this.part2.found) {
             image(this.part2.img, this.part2.x, this.part2.y, this.part2.w, this.part2.h);
         }
 
-        // Draw part3
         if (this.part3.found) {
             image(this.part3.img, this.part3.x, this.part3.y, this.part3.w, this.part3.h);
         }
 
-        // Draw part4
+      
         if (this.part4.found) {
             image(this.part4.img, this.part4.x, this.part4.y, this.part4.w, this.part4.h);
         }
@@ -184,7 +183,7 @@ class Particle {
         this.x += this.xSpeed;
         this.y += this.ySpeed;
         this.ySpeed += gravity;
-        this.size *= 0.95; // Shrink over time
+        this.size *= 0.95;
         if (this.size < 0.5) {
             this.isAlive = false;
         }
@@ -229,7 +228,7 @@ function setup() {
     imgY = height / 2 - (width / 4 * imgHeight / imgWidth) / 2;
     assembling = createVideo(['assets/testvideo.mov']);
     assembling.size(960,  540 );
-    assembling.hide(); // Hide the default video controls
+    assembling.hide(); 
 
 
     for (let i = 0; i < 4; i++) {

@@ -10,8 +10,8 @@ let mindist = 10;
 
 let sprues = [];
 let spruePositions = [];
-let sprueSize = 130; // Initial size of the sprues
-let zoomedSprue = null; // To keep track of the zoomed sprue
+let sprueSize = 130; 
+let zoomedSprue = null; 
 let spruenames = [["A1", "A2"], ["A3", "A4"], ["B1", "B2"], ["B3", "B4"]]
 
 let wrongtime = -200;
@@ -93,23 +93,23 @@ class Shield {
     }
 
     display() {
-        // Draw part1
+     
         imageMode(CENTER);
         if (this.part1.found) {
             image(this.part1.img, this.part1.x, this.part1.y, this.part1.w, this.part1.h);
         }
 
-        // Draw part2
+   
         if (this.part2.found) {
             image(this.part2.img, this.part2.x, this.part2.y, this.part2.w, this.part2.h);
         }
 
-        // Draw part3
+     
         if (this.part3.found) {
             image(this.part3.img, this.part3.x, this.part3.y, this.part3.w, this.part3.h);
         }
 
-        // Draw part4
+
         if (this.part4.found) {
             image(this.part4.img, this.part4.x, this.part4.y, this.part4.w, this.part4.h);
         }
@@ -373,7 +373,7 @@ function draw() {
 }
 
 function mousePressed() {
-    // Check if the mouse is over the image
+    
     if (!isZoomed && mouseX > imgX && mouseX < imgX + imgWidth && mouseY > imgY && mouseY < imgY + imgHeight && zoomedSprue == null) {
         isZoomed = true;
     } else if (isZoomed) {
@@ -435,7 +435,7 @@ function mousePressed() {
             if (assembling.elt.paused) {
                 assembling.play(); // Play the video on mouse press
             } else {
-                assembling.pause(); // Pause the video if it's playing
+                assembling.pause(); 
             }
         }
     }
