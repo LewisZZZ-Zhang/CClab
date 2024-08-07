@@ -131,7 +131,7 @@ function draw() {
             push_stars();
         }
     } else if (i <= 0) {
-        window.location.href = "/Build_a_Gundam_shield/"; // Redirect to another webpage
+        window.location.href = "/Build_a_gundam/Build_a_Gundam_shield/"; // Redirect to another webpage
     } else {
         image(boxImage, boxX, boxY, boxImage.width * scaleFactor * i, boxImage.height * scaleFactor * i);
     }
