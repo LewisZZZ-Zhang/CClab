@@ -2,10 +2,10 @@ let boxImage, boxOpenedImage;
 let boxX, boxY;
 let dragging = false;
 let offsetX, offsetY;
-let scaleFactor = 0.5; // Adjust this factor to resize the images while keeping the same ratio
+let scaleFactor = 0.5;
 let i = 1;
 let k;
-let gap = -1; // 90 degrees in radians
+let gap = -1;
 let guidecolor = [255, 255, 255]
 let stars = [];
 let text1, text2;
@@ -104,7 +104,6 @@ function draw() {
     tint(255, 255 * i);
     image(text2, width / 2 -text2.width/2 -70 + 500*(i-1) , height / 2, text1.width, text1.height);
 
-    // Draw text2 on the right side with transparency
     tint(255, 255 * i);
     image(text1, width / 2 + text1.width/2 + 70 -500*(i-1) , height / 2, text1.width, text1.height);
 
@@ -131,7 +130,7 @@ function draw() {
             push_stars();
         }
     } else if (i <= 0) {
-        window.location.href = "Build_a_Gundam_shield/"; // Redirect to another webpage
+        window.location.href = "Build_a_Gundam_shield/"; 
     } else {
         image(boxImage, boxX, boxY, boxImage.width * scaleFactor * i, boxImage.height * scaleFactor * i);
     }

@@ -286,10 +286,10 @@ function draw() {
         image(sprues[zoomedSprue], width / 2, height / 2, 960, 720);
     }
 
-    fill(255);
-    textSize(16);
-    textAlign(LEFT, TOP);
-    text(`mouseX: ${mouseX}, mouseY: ${mouseY}`, 10, 10);
+    // fill(255);
+    // textSize(16);
+    // textAlign(LEFT, TOP);
+    // text(`mouseX: ${mouseX}, mouseY: ${mouseY}`, 10, 10);
 
     if (wrongtime <= 30 && wrongtime >= 0) {
         wrongtime++
@@ -397,7 +397,9 @@ function mousePressed() {
 
     if (videocanplay && mouseX > width / 2 - 150 && mouseX < width / 2 + 150 && mouseY > height - 55 && mouseY < height - 5) {
         imageMode(CENTER);
-        image(assembling, width / 2, height / 2, 960, 540);
+        // image(assembling, width / 2, height / 2, 960, 540);
+        fill(255);
+        triangle(width / 2 - 10, height - 30, width / 2 + 10, height - 30, width / 2, height - 20);
         videoplay = true
     }
 

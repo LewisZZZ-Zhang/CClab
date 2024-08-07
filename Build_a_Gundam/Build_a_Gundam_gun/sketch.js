@@ -5,12 +5,12 @@ let cut1, cut2, cut3
 let imgX, imgY, imgWidth, imgHeight;
 let isZoomed = false;
 let mindist = 10;
-let testing = true;
+let testing = false;
 
 let sprues = [];
 let spruePositions = [];
-let sprueSize = 130; // Initial size of the sprues
-let zoomedSprue = null; // To keep track of the zoomed sprue
+let sprueSize = 130; 
+let zoomedSprue = null; 
 let spruenames = [["A1", "A2"], ["A3", "A4"], ["B1", "B2"], ["B3", "B4"]]
 
 let wrongtime = -200;
@@ -31,7 +31,7 @@ let exploded = false
 
 class Shield {
     constructor(x, y) {
-        this.part1 = { // B2/5, white
+        this.part1 = { 
             x: x,
             y: y,
             w: part1Img.width / 3,
@@ -78,18 +78,18 @@ class Shield {
     }
 
     display() {
-        // Draw part1
+  
         imageMode(CENTER);
         if (this.part1.found) {
             image(this.part1.img, this.part1.x, this.part1.y, this.part1.w, this.part1.h);
         }
 
-        // Draw part2
+ 
         if (this.part2.found) {
             image(this.part2.img, this.part2.x, this.part2.y, this.part2.w, this.part2.h);
         }
 
-        // Draw part3
+  
         if (this.part3.found) {
             image(this.part3.img, this.part3.x, this.part3.y, this.part3.w, this.part3.h);
         }
@@ -158,7 +158,7 @@ class Particle {
         this.x += this.xSpeed;
         this.y += this.ySpeed;
         this.ySpeed += gravity;
-        this.size *= 0.95; // Shrink over time
+        this.size *= 0.95; 
         if (this.size < 0.5) {
             this.isAlive = false;
         }
@@ -200,9 +200,9 @@ function setup() {
     imgHeight = 300;
     imgX = 10;
     imgY = height / 2 - (width / 4 * imgHeight / imgWidth) / 2;
-    assembling = createVideo(['assets/testvideo.mov']);
+    assembling = createVideo(['assets/testvideo.mp4']);
     assembling.size(960, 540);
-    assembling.hide(); // Hide the default video controls
+    assembling.hide(); 
 
 
     for (let i = 0; i < 4; i++) {
@@ -286,10 +286,10 @@ function draw() {
         image(sprues[zoomedSprue], width / 2, height / 2, 960, 720);
     }
 
-    fill(255);
-    textSize(16);
-    textAlign(LEFT, TOP);
-    text(`mouseX: ${mouseX}, mouseY: ${mouseY}`, 10, 10);
+    // fill(255);
+    // textSize(16);
+    // textAlign(LEFT, TOP);
+    // text(`mouseX: ${mouseX}, mouseY: ${mouseY}`, 10, 10);
 
     if (wrongtime <= 30 && wrongtime >= 0) {
         wrongtime++
@@ -406,7 +406,7 @@ function mousePressed() {
             if (assembling.elt.paused) {
                 assembling.play(); // Play the video on mouse press
             } else {
-                assembling.pause(); // Pause the video if it's playing
+                assembling.pause(); 
             }
         }
     }

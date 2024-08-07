@@ -38,14 +38,14 @@ class Shield {
     }
 
     display() {
-        // Draw part1
+
         imageMode(CENTER);
         image(this.part1.img, this.part1.x, this.part1.y, this.part1.w, this.part1.h);
 
-        // Draw part2
+ 
         image(this.part2.img, this.part2.x, this.part2.y, this.part2.w, this.part2.h);
 
-        // Draw part3
+     
         image(this.part3.img, this.part3.x, this.part3.y, this.part3.w, this.part3.h);
 
         fill(0, 255, 0);
