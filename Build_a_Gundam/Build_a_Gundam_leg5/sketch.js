@@ -52,8 +52,8 @@ class Shield {
             h: part2Img.height / 3,
             dragging: false,
             img: part2Img,
-            x_ass: 108,
-            y_ass: -66,
+            x_ass: 84,
+            y_ass: -142,
             sprue: 0,
             where: [0,0,0,0],
             found: true,
@@ -65,8 +65,8 @@ class Shield {
             h: part3Img.height / 3,
             dragging: false,
             img: part3Img,
-            x_ass: -105,
-            y_ass: -70,
+            x_ass: -77,
+            y_ass: -143,
             sprue: 0,
             where: [0,0,0,0],
             found: false,
@@ -320,7 +320,7 @@ function draw() {
         textSize(16);
         fill(255);
         textAlign(CENTER, CENTER);
-        text('Duplicate the other arm', width / 2, height - 30);
+        text('Duplicate the other leg', width / 2, height - 30);
     }
     if (shield.isComplete() || keyIsDown(71)) {
         if (!cheerplayed) {
@@ -432,7 +432,7 @@ function mousePressed() {
         shield.mousePressed();
     }
 
-    if (shield.part3.found == false && mouseX > width / 2 - 150 && mouseX < width / 2 + 150 && mouseY > height - 30 && mouseY < height - 5) {
+    if (shield.part3.found == false && mouseX > width / 2 - 150 && mouseX < width / 2 + 150 && mouseY > height - 55 && mouseY < height - 5) {
         shield.part3.found = true;
     }
 

@@ -10,8 +10,8 @@ let mindist = 10;
 
 let sprues = [];
 let spruePositions = [];
-let sprueSize = 130; 
-let zoomedSprue = null; 
+let sprueSize = 130;
+let zoomedSprue = null;
 let spruenames = [["A1", "A2"], ["A3", "A4"], ["B1", "B2"], ["B3", "B4"]]
 
 let wrongtime = -200;
@@ -32,44 +32,44 @@ let exploded = false
 
 class Shield {
     constructor(x, y) {
-        this.part1 = { 
-            x: x,
-            y: y -150,
+        this.part1 = {
+            x: x - 150,
+            y: y,
             w: part1Img.width / 3,
             h: part1Img.height / 3,
             dragging: false,
             img: part1Img,
-            x_ass: 16,
-            y_ass: 92,
-            sprue: 3,
-            where: [293, 459, 337, 497],
+            x_ass: 0,
+            y_ass: 0,
+            sprue: 4,
+            where: [392, 190, 487, 394],
             found: false,
         };
         this.part2 = {
             x: x,
-            y: y + 150,
+            y: y,
             w: part2Img.width / 3,
             h: part2Img.height / 3,
             dragging: false,
             img: part2Img,
-            x_ass: -24,
-            y_ass: -91,
-            sprue: 1,
-            where: [534, 564, 579, 629],
+            x_ass: -13,
+            y_ass: -5,
+            sprue: 4,
+            where: [512, 189, 607, 396],
             found: false,
         };
         this.part3 = {
-            x: x,
+            x: x + 150,
             y: y,
             w: part3Img.width / 3,
             h: part3Img.height / 3,
             dragging: false,
             img: part3Img,
-            x_ass:0,
-            y_ass: 0,
-            sprue: 0,
-            where: [0,0,0,0],
-            found: true,
+            x_ass: 24,
+            y_ass: 62,
+            sprue: 4,
+            where: [276, 190, 327, 321],
+            found: false,
         };
         this.parts = [
             this.part1,
@@ -79,18 +79,18 @@ class Shield {
     }
 
     display() {
-     
+
         imageMode(CENTER);
         if (this.part1.found) {
             image(this.part1.img, this.part1.x, this.part1.y, this.part1.w, this.part1.h);
         }
 
-     
+
         if (this.part2.found) {
             image(this.part2.img, this.part2.x, this.part2.y, this.part2.w, this.part2.h);
         }
 
-    
+
         if (this.part3.found) {
             image(this.part3.img, this.part3.x, this.part3.y, this.part3.w, this.part3.h);
         }
@@ -110,7 +110,7 @@ class Shield {
 
     mousePressed() {
         for (let part of this.parts) {
-            if (!videoplay &&!isZoomed && zoomedSprue == null && part.found && mouseX > part.x - part.w / 2 && mouseX < part.x + part.w / 2 && mouseY > part.y - part.h / 2 && mouseY < part.y + part.h / 2) {
+            if (!videoplay && !isZoomed && zoomedSprue == null && part.found && mouseX > part.x - part.w / 2 && mouseX < part.x + part.w / 2 && mouseY > part.y - part.h / 2 && mouseY < part.y + part.h / 2) {
                 part.dragging = true;
                 part.offsetX = mouseX - part.x;
                 part.offsetY = mouseY - part.y;
@@ -202,8 +202,8 @@ function setup() {
     imgX = 10;
     imgY = height / 2 - (width / 4 * imgHeight / imgWidth) / 2;
     assembling = createVideo(['assets/testvideo.mov']);
-    assembling.size(960,  540 );
-    assembling.hide(); 
+    assembling.size(960, 540);
+    assembling.hide();
 
 
     for (let i = 0; i < 4; i++) {
@@ -247,17 +247,17 @@ function draw() {
     back_ground()
     shield.display();
     if (shield.isComplete() || keyIsDown(71)) {
-        if (!cheerplayed) {
-            cheerSound.setVolume(0.5);
-            cheerSound.play();
-        }
-        cheerplayed = true;
-        videocanplay = true;
+        // if (!cheerplayed) {
+        //     cheerSound.setVolume(0.5);
+        //     cheerSound.play();
+        // }
+        // cheerplayed = true;
+        // videocanplay = true;
         fill(0, 255, 0);
         textSize(32);
         textAlign(CENTER, CENTER);
         if (!videoplay) {
-            text('Arm completed!', width / 2, height - 75);
+            text('Done!', width / 2, height - 75);
         }
         let done = document.getElementById('done');
         done.style.display = 'block';
@@ -286,7 +286,7 @@ function draw() {
         background(0, 0, 0, 150)
         image(sprues[zoomedSprue], width / 2, height / 2, 960, 720);
     }
-    
+
     if (testing) {
         fill(255);
         textSize(16);
@@ -308,13 +308,13 @@ function draw() {
         fill(255);
         textAlign(CENTER, CENTER);
         text('Click here to watch the assembling video', width / 2, height - 30);
-        if (exploded ==  false) {
+        if (exploded == false) {
             exploded = 0
         }
         if (exploded <= 180) {
             createExplosion(0, height, -1);
             createExplosion(width, height, 1);
-            exploded ++
+            exploded++
         }
 
     }
@@ -427,7 +427,7 @@ function mouseReleased() {
 function createExplosion(x, y, a) {
     let numParticles = 15;
     for (let i = 0; i < numParticles; i++) {
-        let angle = random(PI, PI * 3/2);
+        let angle = random(PI, PI * 3 / 2);
         let speed = random(10, 15);
         let xSpeed = a * cos(angle) * speed;
         let ySpeed = sin(angle) * speed;

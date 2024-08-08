@@ -1,4 +1,4 @@
-let testing = false;
+let testing = true;
 
 let shield;
 let part1Img, part2Img, part3Img, guideImg;
@@ -39,10 +39,10 @@ class Shield {
             h: part1Img.height / 3,
             dragging: false,
             img: part1Img,
-            x_ass:-10,
-            y_ass:-90,
-            sprue: 3,
-            where: [516, 401, 567, 495],
+            x_ass: 0,
+            y_ass: 0,
+            sprue: 2,
+            where: [516,102,763,166],
             found: false,
         };
         this.part2 = {
@@ -52,10 +52,10 @@ class Shield {
             h: part2Img.height / 3,
             dragging: false,
             img: part2Img,
-            x_ass: -15,
-            y_ass: 50-31,
-            sprue: 1,
-            where: [555, 434, 593, 496],
+            x_ass: -13,
+            y_ass: 0,
+            sprue: 2,
+            where: [451,231, 490,300],
             found: false,
         };
         this.part3 = {
@@ -65,11 +65,11 @@ class Shield {
             h: part3Img.height / 3,
             dragging: false,
             img: part3Img,
-            x_ass: -20,
-            y_ass: 50 -55,
-            sprue: 1,
-            where: [471, 577, 499, 611],
-            found: false,
+            x_ass: 3,
+            y_ass: -103,
+            sprue: 0,
+            where: [0,0,0,0],
+            found: true,
         };
         this.part4 = {
             x: x -100,
@@ -78,11 +78,11 @@ class Shield {
             h: part4Img.height / 3,
             dragging: false,
             img: part4Img,
-            x_ass: 0,
-            y_ass: -95,
-            sprue: 3,
-            where: [414,397, 465, 493],
-            found: false,
+            x_ass: 7,
+            y_ass: 51,
+            sprue: 0,
+            where: [0,0,0,0],
+            found: true,
         };
         this.part5 = {
             x: x + 100 ,
@@ -91,11 +91,11 @@ class Shield {
             h: part5Img.height / 3,
             dragging: false,
             img: part5Img,
-            x_ass: -14,
-            y_ass: 38,
-            sprue: 3,
-            where: [423, 291, 556, 333],
-            found: false,
+            x_ass: 37,
+            y_ass: -212,
+            sprue: 0,
+            where: [0,0,0,0],
+            found: true,
         };
         this.parts = [
             this.part1,
@@ -294,12 +294,12 @@ function draw() {
     back_ground()
     shield.display();
     if (shield.isComplete() || keyIsDown(71)) {
-        // if (!cheerplayed) {
-        //     cheerSound.setVolume(0.5);
-        //     cheerSound.play();
-        // }
-        // cheerplayed = true;
-        // videocanplay = true;
+        if (!cheerplayed) {
+            cheerSound.setVolume(0.5);
+            cheerSound.play();
+        }
+        cheerplayed = true;
+        videocanplay = true;
         fill(0, 255, 0);
         textSize(32);
         textAlign(CENTER, CENTER);

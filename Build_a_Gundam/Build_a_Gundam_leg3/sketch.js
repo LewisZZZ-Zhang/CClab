@@ -1,4 +1,4 @@
-let testing = false;
+let testing = true;
 
 let shield;
 let part1Img, part2Img, part3Img, guideImg;
@@ -39,10 +39,10 @@ class Shield {
             h: part1Img.height / 3,
             dragging: false,
             img: part1Img,
-            x_ass: 0,
-            y_ass: 0,
-            sprue: 1,
-            where: [884, 445, 990, 507],
+            x_ass: -26,
+            y_ass: -7,
+            sprue: 4,
+            where: [287,56,387,116],
             found: false,
         };
         this.part2 = {
@@ -53,9 +53,9 @@ class Shield {
             dragging: false,
             img: part2Img,
             x_ass: 0,
-            y_ass: -10,
-            sprue: 1,
-            where: [530, 271, 589, 337],
+            y_ass: 0,
+            sprue: 4,
+            where: [487,60,809,122],
             found: false,
         };
         // this.part3 = {
