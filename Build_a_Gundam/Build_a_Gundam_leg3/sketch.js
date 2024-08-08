@@ -1,4 +1,4 @@
-let testing = true;
+let testing = false;
 
 let shield;
 let part1Img, part2Img, part3Img, guideImg;
