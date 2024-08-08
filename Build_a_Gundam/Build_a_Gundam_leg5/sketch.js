@@ -10,7 +10,7 @@ let mindist = 10;
 
 let sprues = [];
 let spruePositions = [];
-let sprueSize = 130;
+let sprueSize = 130; 
 let zoomedSprue = null; 
 let spruenames = [["A1", "A2"], ["A3", "A4"], ["B1", "B2"], ["B3", "B4"]]
 
@@ -34,52 +34,94 @@ class Shield {
     constructor(x, y) {
         this.part1 = { 
             x: x,
-            y: y -150,
+            y: y + 100,
             w: part1Img.width / 3,
             h: part1Img.height / 3,
             dragging: false,
             img: part1Img,
-            x_ass: 16,
-            y_ass: 92,
-            sprue: 3,
-            where: [293, 459, 337, 497],
-            found: false,
-        };
-        this.part2 = {
-            x: x,
-            y: y + 150,
-            w: part2Img.width / 3,
-            h: part2Img.height / 3,
-            dragging: false,
-            img: part2Img,
-            x_ass: -24,
-            y_ass: -91,
-            sprue: 1,
-            where: [534, 564, 579, 629],
-            found: false,
-        };
-        this.part3 = {
-            x: x,
-            y: y,
-            w: part3Img.width / 3,
-            h: part3Img.height / 3,
-            dragging: false,
-            img: part3Img,
             x_ass:0,
-            y_ass: 0,
+            y_ass:0,
             sprue: 0,
             where: [0,0,0,0],
             found: true,
         };
+        this.part2 = {
+            x: x -200,
+            y: y + 100,
+            w: part2Img.width / 3,
+            h: part2Img.height / 3,
+            dragging: false,
+            img: part2Img,
+            x_ass: 108,
+            y_ass: -66,
+            sprue: 0,
+            where: [0,0,0,0],
+            found: true,
+        };
+        this.part3 = {
+            x: x + 200,
+            y: y + 100,
+            w: part3Img.width / 3,
+            h: part3Img.height / 3,
+            dragging: false,
+            img: part3Img,
+            x_ass: -105,
+            y_ass: -70,
+            sprue: 0,
+            where: [0,0,0,0],
+            found: false,
+        };
+        // this.part4 = {
+        //     x: x - 200,
+        //     y: y -100,
+        //     w: part4Img.width / 3,
+        //     h: part4Img.height / 3,
+        //     dragging: false,
+        //     img: part4Img,
+        //     x_ass: 80,
+        //     y_ass: 14,
+        //     sprue: 3,
+        //     where: [280, 355, 353, 410],
+        //     found: false,
+        // };
+        // this.part5 = {
+        //     x: x + 200,
+        //     y: y -100,
+        //     w: part5Img.width / 3,
+        //     h: part5Img.height / 3,
+        //     dragging: false,
+        //     img: part5Img,
+        //     x_ass: -73,
+        //     y_ass: 18,
+        //     sprue: 3,
+        //     where: [931, 357, 1004, 416],
+        //     found: false,
+        // };
+        // this.part6 = {
+        //     x: x ,
+        //     y: y -150,
+        //     w: part6Img.width / 3,
+        //     h: part6Img.height / 3,
+        //     dragging: false,
+        //     img: part6Img,
+        //     x_ass: 10,
+        //     y_ass: 60,
+        //     sprue: 0,
+        //     where: [0,0,0,0],
+        //     found: true,
+        // };
         this.parts = [
             this.part1,
             this.part2,
-            this.part3
+            this.part3,
+            // this.part4,
+            // this.part5,
+            // this.part6
         ];
     }
 
     display() {
-        
+     
         imageMode(CENTER);
         if (this.part1.found) {
             image(this.part1.img, this.part1.x, this.part1.y, this.part1.w, this.part1.h);
@@ -90,11 +132,25 @@ class Shield {
             image(this.part2.img, this.part2.x, this.part2.y, this.part2.w, this.part2.h);
         }
 
-    
+      
         if (this.part3.found) {
             image(this.part3.img, this.part3.x, this.part3.y, this.part3.w, this.part3.h);
         }
 
+       
+        // if (this.part4.found) {
+        //     image(this.part4.img, this.part4.x, this.part4.y, this.part4.w, this.part4.h);
+        // }
+
+     
+        // if (this.part5.found) {
+        //     image(this.part5.img, this.part5.x, this.part5.y, this.part5.w, this.part5.h);
+        // }
+
+      
+        // if (this.part6.found) {
+        //     image(this.part6.img, this.part6.x, this.part6.y, this.part6.w, this.part6.h);
+        // }
 
         noStroke();
         if (testing) {
@@ -137,10 +193,17 @@ class Shield {
 
     isComplete() {
 
-        const dist1 = dist(this.part1.x + this.part1.x_ass, this.part1.y + this.part1.y_ass, this.part2.x + this.part2.x_ass, this.part2.y + this.part2.y_ass);
-        const dist2 = dist(this.part2.x + this.part2.x_ass, this.part2.y + this.part2.y_ass, this.part3.x + this.part3.x_ass, this.part3.y + this.part3.y_ass);
-        const dist3 = dist(this.part3.x + this.part3.x_ass, this.part3.y + this.part3.y_ass, this.part1.x + this.part1.x_ass, this.part1.y + this.part1.y_ass);
-        return dist1 < mindist && dist2 < mindist && dist3 < mindist;
+        let isComplete = true;
+        for (let i = 0; i < this.parts.length; i++) {
+            const part1 = this.parts[i];
+            const part2 = this.parts[(i + 1) % this.parts.length];
+            const dist = Math.hypot(part1.x + part1.x_ass - part2.x - part2.x_ass, part1.y + part1.y_ass - part2.y - part2.y_ass);
+            if (dist >= mindist) {
+            isComplete = false;
+            break;
+            }
+        }
+        return isComplete;
     }
 }
 
@@ -159,7 +222,7 @@ class Particle {
         this.x += this.xSpeed;
         this.y += this.ySpeed;
         this.ySpeed += gravity;
-        this.size *= 0.95; // Shrink over time
+        this.size *= 0.95; 
         if (this.size < 0.5) {
             this.isAlive = false;
         }
@@ -176,6 +239,10 @@ function preload() {
     part1Img = loadImage('assets/arm1.png', () => console.log('part1Img loaded'), () => console.error('Failed to load part1Img'));
     part2Img = loadImage('assets/arm2.png', () => console.log('part2Img loaded'), () => console.error('Failed to load part2Img'));
     part3Img = loadImage('assets/arm3.png', () => console.log('part3Img loaded'), () => console.error('Failed to load part3Img'));
+    // part4Img = loadImage('assets/arm4.png', () => console.log('part4Img loaded'), () => console.error('Failed to load part4Img'));
+    // part5Img = loadImage('assets/arm5.png', () => console.log('part5Img loaded'), () => console.error('Failed to load part5Img'));
+    // part6Img = loadImage('assets/arm6.png', () => console.log('part6Img loaded'), () => console.error('Failed to load part6Img'));
+
     guideImg = loadImage('assets/guide.png', () => console.log('guidebook loaded'), () => console.error('Failed to load guidebook'));
     wrongsign = loadImage('assets/wrong.png', () => console.log('wrongsign loaded'), () => console.error('Failed to load wrongsign'));
     for (let i = 0; i < 4; i++) {
@@ -203,7 +270,7 @@ function setup() {
     imgY = height / 2 - (width / 4 * imgHeight / imgWidth) / 2;
     assembling = createVideo(['assets/testvideo.mov']);
     assembling.size(960,  540 );
-    assembling.hide(); // Hide the default video controls
+    assembling.hide(); 
 
 
     for (let i = 0; i < 4; i++) {
@@ -246,6 +313,15 @@ function back_ground() {
 function draw() {
     back_ground()
     shield.display();
+    if (shield.part3.found == false) {
+        rectMode(CENTER);
+        fill(0, 0, 0, 150);
+        rect(width / 2, height - 30, 300, 50);
+        textSize(16);
+        fill(255);
+        textAlign(CENTER, CENTER);
+        text('Duplicate the other arm', width / 2, height - 30);
+    }
     if (shield.isComplete() || keyIsDown(71)) {
         if (!cheerplayed) {
             cheerSound.setVolume(0.5);
@@ -257,7 +333,7 @@ function draw() {
         textSize(32);
         textAlign(CENTER, CENTER);
         if (!videoplay) {
-            text('Arm completed!', width / 2, height - 75);
+            text('The upper body is completed!', width / 2, height - 75);
         }
         let done = document.getElementById('done');
         done.style.display = 'block';
@@ -347,13 +423,17 @@ function draw() {
 }
 
 function mousePressed() {
-    // Check if the mouse is over the image
+   
     if (!isZoomed && mouseX > imgX && mouseX < imgX + imgWidth && mouseY > imgY && mouseY < imgY + imgHeight && zoomedSprue == null) {
         isZoomed = true;
     } else if (isZoomed) {
         isZoomed = false;
     } else {
         shield.mousePressed();
+    }
+
+    if (shield.part3.found == false && mouseX > width / 2 - 150 && mouseX < width / 2 + 150 && mouseY > height - 30 && mouseY < height - 5) {
+        shield.part3.found = true;
     }
 
     if (zoomedSprue !== null) {
@@ -407,7 +487,7 @@ function mousePressed() {
     if (videoplay) {
         if (mouseX > width / 2 - 320 && mouseX < width / 2 + 320 && mouseY > height / 2 - 240 && mouseY < height / 2 + 240) {
             if (assembling.elt.paused) {
-                assembling.play(); // Play the video on mouse press
+                assembling.play(); 
             } else {
                 assembling.pause(); // Pause the video if it's playing
             }

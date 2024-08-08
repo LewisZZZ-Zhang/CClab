@@ -32,7 +32,7 @@ let exploded = false
 
 class Shield {
     constructor(x, y) {
-        this.part1 = { 
+        this.part1 = { // B2/5, white
             x: x,
             y: y + 100,
             w: part1Img.width / 3,

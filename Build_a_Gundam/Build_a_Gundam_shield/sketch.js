@@ -176,9 +176,9 @@ function preload() {
     part2Img = loadImage('assets/shield2.png', () => console.log('part2Img loaded'), () => console.error('Failed to load part2Img'));
     part3Img = loadImage('assets/shield3.png', () => console.log('part3Img loaded'), () => console.error('Failed to load part3Img'));
     guideImg = loadImage('assets/guide.jpg', () => console.log('guidebook loaded'), () => console.error('Failed to load guidebook'));
-    wrongsign = loadImage('assets/wrong.png', () => console.log('wrongsign loaded'), () => console.error('Failed to load wrongsign'));
+    wrongsign = loadImage('assets/Wrong.png', () => console.log('Wrongsign loaded'), () => console.error('Failed to load wrongsign'));
     for (let i = 0; i < 4; i++) {
-        sprues[i] = loadImage(`assets/sprue${i + 1}.png`);
+        sprues[i] = loadImage(`assets/Sprue${i + 1}.png`);
     }
     cut1 = loadSound('assets/cut1.mp3', () => console.log('cut1 loaded'), () => console.error('Failed to load cut1'));
     cut2 = loadSound('assets/cut2.mp3', () => console.log('cut2 loaded'), () => console.error('Failed to load cut2'));
