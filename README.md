@@ -1,6 +1,9 @@
-# Hi! I'm Lewis Zhang.
-Currently an underguate at New York University Shanghai.
+# Hi! I'm Lewis Zhang. 👋  
+Currently an undergraduate at **New York University Shanghai**.
 
-projects:
-[Build_a_Gundam](https://lewiszzz-zhang.github.io/CClab/Build_a_Gundam/)
- 
+---
+
+## 🚀 Projects
+- 🌟 [Build a Gundam](https://lewiszzz-zhang.github.io/CClab/Build_a_Gundam/): A fun interactive project where you can build your own Gundam!  
+
+
