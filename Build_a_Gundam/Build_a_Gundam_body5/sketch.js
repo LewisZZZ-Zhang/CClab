@@ -201,19 +201,19 @@ function preload() {
     // part3Img = loadImage('assets/head3.png', () => console.log('part3Img loaded'), () => console.error('Failed to load part3Img'));
     // part4Img = loadImage('assets/head4.png', () => console.log('part4Img loaded'), () => console.error('Failed to load part4Img'));
     guideImg = loadImage('assets/guide.png', () => console.log('guidebook loaded'), () => console.error('Failed to load guidebook'));
-    wrongsign = loadImage('assets/Wrong.png', () => console.log('wrongsign loaded'), () => console.error('Failed to load wrongsign'));//
+    wrongsign = loadImage('../assets/Wrong.png', () => console.log('wrongsign loaded'), () => console.error('Failed to load wrongsign'));//
     for (let i = 0; i < 4; i++) {
-        sprues[i] = loadImage(`assets/Sprue${i + 1}.png`);//
+        sprues[i] = loadImage(`../assets/Sprue${i + 1}.png`);//
     }
-    cut1 = loadSound('assets/cut1.mp3', () => console.log('cut1 loaded'), () => console.error('Failed to load cut1'));
-    cut2 = loadSound('assets/cut2.mp3', () => console.log('cut2 loaded'), () => console.error('Failed to load cut2'));
-    cut3 = loadSound('assets/cut3.mp3', () => console.log('cut3 loaded'), () => console.error('Failed to load cut3'));
+    cut1 = loadSound('../assets/cut1.mp3', () => console.log('cut1 loaded'), () => console.error('Failed to load cut1'));
+    cut2 = loadSound('../assets/cut2.mp3', () => console.log('cut2 loaded'), () => console.error('Failed to load cut2'));
+    cut3 = loadSound('../assets/cut3.mp3', () => console.log('cut3 loaded'), () => console.error('Failed to load cut3'));
 
-    sp1 = loadSound('assets/sp1.mp3', () => console.log('sp1 loaded'), () => console.error('Failed to load sp1'));
-    sp2 = loadSound('assets/sp2.mp3', () => console.log('sp2 loaded'), () => console.error('Failed to load sp2'));
-    sp3 = loadSound('assets/sp3.mp3', () => console.log('sp3 loaded'), () => console.error('Failed to load sp3'));
+    sp1 = loadSound('../assets/sp1.mp3', () => console.log('sp1 loaded'), () => console.error('Failed to load sp1'));
+    sp2 = loadSound('../assets/sp2.mp3', () => console.log('sp2 loaded'), () => console.error('Failed to load sp2'));
+    sp3 = loadSound('../assets/sp3.mp3', () => console.log('sp3 loaded'), () => console.error('Failed to load sp3'));
 
-    cheerSound = loadSound('assets/cheer.mp3', () => console.log('cheerSound loaded'), () => console.error('Failed to load cheerSound'));
+    cheerSound = loadSound('../assets/cheer.mp3', () => console.log('cheerSound loaded'), () => console.error('Failed to load cheerSound'));
 
 }
 
