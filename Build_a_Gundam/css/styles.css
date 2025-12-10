@@ -1,5 +1,18 @@
+/* Grid layout: header (title), canvas full-width, then progress + text side-by-side */
 body {
+    display: grid;
+    grid-template-columns: 30% 70%; /* left: progress, right: intro/text */
+    grid-template-rows: auto auto auto; /* header, canvas, content row - allow bottom row to grow */
+    grid-template-areas:
+        "header header"
+        "canvas canvas"
+        "progress text";
+    gap: 20px;
+    margin: 0;
+    padding: 20px;
     background-color: #00273a;
+    color: #111;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial;
 }
 
 #done {
@@ -18,57 +31,87 @@ body {
     padding-top: 1px;
 }
 
-#sketch-holder {
-    width: 1280px;
-    height: 720px;
-    position: absolute;
-    right: 30px;
+/* Header/title */
+#title {
+    grid-area: header;
+    font-size: 30px;
+    font-weight: bold;
     margin: 0;
-    /* transform: scale(calc(100vw -400px / 1280)); 
-    transform-origin: top right;  */
+    color: #ffffff;
 }
 
+/* Canvas occupies full width above */
+#sketch-holder {
+    grid-area: canvas;
+    width: 100%;
+    max-width: 100%;
+    aspect-ratio: 16 / 9;
+    height: auto;
+    background: transparent;
+    margin: 0;
+}
+
+/* Ensure the actual <canvas> element created by p5.js fills the container width
+   and keeps the aspect ratio. This forces the rendered canvas to match layout
+   even when the browser zoom changes. */
+#sketch-holder > canvas {
+    width: 100% !important;
+    height: auto !important;
+    display: block;
+}
+
+/* Progress (left) and text (right) on the same row below the canvas */
 #left-list {
-    width: calc(100vw - 1450px);;
-    height: 670px;
-    padding: 40px;
-    padding-top: 5px;
+    grid-area: progress;
+    padding: 24px;
     background-color: #f0f0f0;
-    margin-left: 20px;
-    font-size: 24px;
-    line-height: 0.6; /* Adjust the leading here */
+    border-radius: 6px;
+    font-size: 1rem;
+    line-height: 1.1;
+    /* Let the progress list grow naturally so the page scrolls instead of the box */
+    max-height: none;
+    overflow: visible;
 }
 
 #left-list ul {
-    list-style-type:square;
-    padding: 0;
-    line-height: 0.95; /* Adjust the leading here */
+    list-style-type: square;
+    padding-left: 18px;
+    margin: 8px 0;
 }
 
 #left-list ul ul {
-    padding-left: 40px;
-    font-size: 20px;
+    padding-left: 18px;
+    font-size: 0.95rem;
 }
 
 .highlight {
     background-color: yellow;
     font-weight: bold;
+    padding: 2px 6px;
+    border-radius: 4px;
 }
 
-
 #text-box {
-    margin-top: 20px;
-    margin: 30px ;
-    padding: 30px;
+    grid-area: text;
+    margin: 0;
+    padding: 24px;
     background-color: #e0e0e0;
     border: 1px solid #ccc;
     border-radius: 5px;
-    font-size: 20px;
+    font-size: 1rem;
 }
 
-#title {
-    font-size: 30px;
-    font-weight: bold;
-    margin-bottom: 20px;
-    color: #ffffff;
+/* Responsive: stack everything on narrow screens */
+@media (max-width: 900px) {
+    body {
+        grid-template-columns: 1fr;
+        grid-template-rows: auto auto auto auto;
+        grid-template-areas:
+            "header"
+            "canvas"
+            "progress"
+            "text";
+        padding: 12px;
+    }
+    #left-list { max-height: none; }
 }
