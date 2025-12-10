@@ -390,7 +390,7 @@ function draw() {
     text("Don't shoot this creature.",width / 2, height / 2+20)
   }
 
-  background(0, 0, 50 + 50 * sin((frameCount * PI) / 400), 50);
+  background(0, 0, 50 + 50 * sin((frameCount * PI) / 400), 100);
   if (frameCount < 225) {
     for (let i = 0; i < 3; i++) {
       creature(
